@@ -1,0 +1,82 @@
+{% extends "base.html" %} {% load static %} {% block content %} 
+
+
+<div class="container my-5">
+  <div class="row">
+    <div class="col-lg-6 d-flex justify-content-center flex-column">
+      <h1 class="">Welcome to Car Go</h1>
+      <p class="text-secondary">
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id repellat
+        accusantium fugiat dignissimos consequuntur quae modi porro deleniti. Id
+        culpa, sunt pariatur dicta iure quas beatae quasi aperiam recusandae
+        corrupti.
+      </p>
+    </div>
+    <div class="col-lg-6">
+      <img
+        class="img-fluid rounded-4"
+        src="{% static 'blackHomeCar.jpg' %}"
+        alt=""
+      />
+    </div>
+  </div>
+
+  <div class="text-center my-5 d-flex justify-content-evenly">
+    {% for i in brand %}
+    <div
+      class=""
+      style="border: 1px solid black; padding: 10px; border-radius: 10px"
+    >
+      <a href="{% url 'brand_wise_car' i.slug %}" class="btn btn-dark fs-2"
+        >{{i.brand_name}}</a
+      >
+    </div>
+    {% endfor %}
+  </div>
+  <div class="border border-dark p-3 rounded my-5">
+    <h1 class="text-center">Total Car: {{car|length}}</h1>
+  </div>
+  <div class="row">
+    {% for c in car %}
+    <div class="col-lg-4">
+      <div class="card mb-3">
+        <div>
+          <img
+            src="{{ c.car_image.url }}"
+            class="img-fluid rounded-top"
+            alt="{{ c.car_name }}"
+          />
+        </div>
+        <div>
+          <div class="card-body">
+            <h5 class="card-title">
+              <a
+                class="text-dark text-decoration-none"
+                href="{% url 'car_details' c.id %}"
+              >
+                {{ c.car_name }}</a
+              >
+            </h5>
+            <p class="card-text">{{ c.car_discription |truncatewords:20}}</p>
+            <p class="card-text"><b> Price: </b> ${{ c.car_price }}</p>
+            <p class="card-text"><b> Brand: </b>{{ c.car_brand.brand_name }}</p>
+            <p class="card-text">
+              <b> Available Quantity: </b> {{ c.car_quantity }}
+            </p>
+            {% if user.is_authenticated %}
+
+            <a href="{% url 'buy_car' c.id %}" class="btn btn-success"
+              >Buy Now</a
+            >
+
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

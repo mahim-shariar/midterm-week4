@@ -1,0 +1,30 @@
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block content %} 
+{% if messages %} {% for m in messages %}
+
+<p {% if m.tages %} class="{{m.tages}}" {% endif %}>{{m}}</p>
+
+{% endfor %} 
+{% endif %}
+
+
+
+<form
+  action=""
+  class="container my-5 shadow-lg p-4 rounded-3"
+  method="post"
+  novalidate
+>
+  <h3>Login</h3>
+
+  {% csrf_token %} {{form | crispy}}
+
+  <button class="btn btn-primary w-100 my-3" type="submit">Submit</button>
+  
+  <small>
+    Create a new Account <a href="{% url 'register' %}">Register</a></small
+  >
+
+
+</form>
+
+{% endblock %}
